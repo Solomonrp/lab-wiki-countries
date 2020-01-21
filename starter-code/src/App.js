@@ -1,24 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import countries from './countries.json'
+import { Switch, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import CountryDetail from './components/CountryDetail';
 
 function App() {
+  const stilo = {
+    maxHeight: "90vh",
+    overflow: "scroll"
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="row">
+        <div className="col-5" style={stilo}>
+          <div className="list-group">
+            {
+              countries.map((countrie, index) => {
+                return (
+                    <Link to={`/${countrie.name.common}`} key={index} className="list-group-item list-group-item-action">{countrie.name.common}</Link>
+                )
+              })
+            }
+          </div>
+        </div>
+      </div>
+      <Switch>
+        <Route path='/:id' component={CountryDetail} />
+      </Switch>
+
     </div>
   );
 }
